@@ -38,13 +38,23 @@ public class MainController {
   @GetMapping(path="/ageCount")
   public @ResponseBody Map<Integer,Integer> getAgeCount() {
     Iterable<User> users = userRepository.findAll();
-    Map<Integer,Integer> ageCount = new HashMap<Integer,Integer>();
+    Map<Integer,Integer> ageCountMap = new HashMap<Integer,Integer>();
     for(User user: users){
-        ageCount.merge(user.getAge(), 1, Integer::sum);
+        ageCountMap.merge(user.getAge(), 1, Integer::sum);
         
     }
-    return ageCount;
-  } 
+    return ageCountMap;
+  }
+  @GetMapping(path="/nameAndAge")
+  public @ResponseBody Map<String,Integer> getNameAndAge() {
+    Iterable<User> users = userRepository.findAll();
+    Map<String,Integer> nameAndAgeMap = new HashMap<String,Integer>();
+    for(User user: users){
+        nameAndAgeMap.put(user.getName(),user.getAge());
+        
+    }
+    return nameAndAgeMap;
+  }  
 
   
 }
